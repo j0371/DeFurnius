@@ -170,3 +170,25 @@ CLIPS = {
     "hand_sway": (3.0, True, lambda t: (0.004 * math.sin(TAU * t / 3.0), 0.006 * math.sin(TAU * t / 1.5), 0), None,
                   lambda t: (1.5 * math.sin(TAU * t / 3.0), 0, 2.0 * math.sin(TAU * t / 3.0 + 1))),
 }
+
+
+# ---- round 2 clips -----------------------------------------------------------------------------------
+def _pop(t, d, peak):
+    k = min(t / d, 1.0)
+    s = peak * math.sin(math.pi * k) ** 0.6
+    return (s, s, s)
+
+
+CLIPS2 = {
+    "proj_skull_tumble": (1.2, True, None, None, lambda t: (360 * t / 1.2, 0, 220 * t / 1.2)),
+    "proj_thorn_roll": (0.5, True, None, None, lambda t: (0, 0, 360 * t / 0.5)),
+    "muzzle_flash_pop": (0.1, False, None, lambda t: _pop(t, 0.1, 1.0), None),
+    "hit_spark_burst": (0.25, False, None, lambda t: _pop(t, 0.25, 1.4), None),
+    "parry_ring_expand": (0.3, False, None,
+                          lambda t: (lambda s: (s, s, s))(0.2 + 1.4 * (1 - (1 - min(t / 0.3, 1)) ** 2)), None),
+    "dark_one_drift": (6.0, True, lambda t: (0.12 * math.sin(TAU * t / 6.0), 0.2 * math.sin(TAU * t / 3.0), 0), None,
+                       lambda t: (0, 4 * math.sin(TAU * t / 6.0), 0)),
+    "dark_one_shards_orbit": (20.0, True, None, None, lambda t: (0, 360 * t / 20.0, 0)),
+    "idol_glow_pulse": (1.6, True, None,
+                        lambda t: (lambda s: (s, s, s))(1 + 0.12 * (0.5 - 0.5 * math.cos(TAU * t / 1.6))), None),
+}

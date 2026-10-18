@@ -1,0 +1,15 @@
+newmtl inside
+Ka 0 0 0
+Kd 0.0118 0.0118 0.0235
+Ks 0 0 0
+
+newmtl rim
+Ka 0 0 0
+Kd 0.2353 0.2353 0.3137
+Ks 0 0 0
+Ke 0.2353 0.2353 0.3137
+
+newmtl shell
+Ka 0 0 0
+Kd 0.0549 0.0549 0.0784
+Ks 0 0 0

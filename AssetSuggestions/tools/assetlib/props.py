@@ -121,7 +121,8 @@ def pedestal():
 # ---- doorway, cellar ------------------------------------------------------------------------
 def gate():
     """The Gates of Hell doorway with a lintel for the inscription. Opening faces +Z."""
-    mats = _mats(stone=WALL, lintel={"kd": (110, 96, 84), "map": f"{TEX}/lintel_inscription.png"},
+    mats = _mats(stone=WALL, lintel={"kd": (110, 96, 84), "map": f"{TEX}/lintel_inscription.png",
+                                     "uvrect": (-1.8, 1.8, 3.05, 3.75)},   # whole texture on the front face
                  glow=GLOW, trim=TRIM)
     m = M.Mesh()
     m.merge(M.box((0.7, 3.2, 0.8), "stone", center=(-1.35, 1.6, 0)))
