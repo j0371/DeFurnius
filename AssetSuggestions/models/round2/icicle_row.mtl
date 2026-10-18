@@ -1,0 +1,9 @@
+newmtl ice
+Ka 0 0 0
+Kd 0.7843 0.8824 0.9412
+Ks 0 0 0
+
+newmtl ice_dark
+Ka 0 0 0
+Kd 0.4706 0.6275 0.7451
+Ks 0 0 0

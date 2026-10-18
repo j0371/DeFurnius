@@ -196,9 +196,15 @@ def _face_normal(t):
     return n / ln if ln > 1e-12 else np.array([0, 1, 0.0])
 
 
-def _uv(t, n, mode, scale):
-    """Planar projection along the face's dominant axis (retro, texel-density based)."""
+def _uv(t, n, mode, scale, rect=None):
+    """Planar projection along the face's dominant axis (retro, texel-density based).
+
+    rect = (x0, x1, y0, y1): on faces pointing along Z, map that XY rectangle onto 0..1.
+    """
     ax = np.argmax(np.abs(n))
+    if rect is not None and ax == 2:
+        x0, x1, y0, y1 = rect
+        return [((float(v[0]) - x0) / (x1 - x0), (float(v[1]) - y0) / (y1 - y0)) for v in t]
     cols = {0: (2, 1), 1: (0, 2), 2: (0, 1)}[ax]
     return [(float(v[cols[0]]) * scale, float(v[cols[1]]) * scale) for v in t]
 
@@ -228,7 +234,7 @@ def write_obj(mesh, path, materials, name=None, uv_scale=1.0, sphere_uv=()):
             if max(us) - min(us) > 0.5:
                 uvs = [(u + 1 if u < 0.5 else u, v) for u, v in uvs]
         else:
-            uvs = _uv(t, n, "planar", uv_scale)
+            uvs = _uv(t, n, "planar", uv_scale, materials[mat].get("uvrect"))
         i0 = len(vs)
         vs += [tuple(v) for v in t]
         vts += uvs

@@ -67,3 +67,39 @@ Output is deterministic. Palettes live in `tools/assetlib/cores.py`, hands in `h
 - No audio, no real character art, nothing is rigged.
 - Frost variants of the models are not separate meshes; only the textures change.
 - Parry-window colour and the out-of-view arrow are provided as sprites only; the logic is yours.
+
+---
+
+# Round 2
+
+Built on top of the first drop (same tools, same conventions). New output lives in `round2/` and
+`previews/round2_*`, `previews/cores*`; the shared tools gained a few options.
+
+| What | Where |
+| --- | --- |
+| **Textured scenes** of the arena kit in every core (hell: cellar through the gate, and a fight mock; frost: Treachery) | `previews/cores_overview.png`, `previews/cores/` |
+| 3 new cores: `bone_rust`, `violet_dusk`, `sunlit_snow` (11 in total) | `textures/` |
+| **Dark One damage stages** 0-3 (shell cracks open, shards fly off, light bleeds out) and a **defeated shell with a doorway** to walk into | `models/round2/dark_one_*` |
+| Frost kit: crystal-rimmed ring segment, frosted pedestal, icicle row, snow drift | `models/round2/` |
+| **Poison idols** (rooster, snake, pig) for per-level set dressing | `models/round2/idol_*` |
+| **Projectiles**: ember, thorn and skull, each in a normal and a cyan "parry window" version; player bolt, muzzle flash, hit spark | `models/round2/proj_*`, `bolt_player`, ... |
+| 3 more hands: `hand_arachnid_v2` (carapace, spined legs, eye cluster, much more spider), `hand_cage`, `hand_wire` | `models/hands_round2/` |
+| **VFX sprites**: 16-frame flame loop, ember particles, smoke, spark burst, snowflakes, parry and hit flashes, damage and frost vignettes | `round2/vfx/`, `previews/round2_vfx.png` |
+| **HUD**: 4 crosshairs, 3 rage meter styles (bar, vertical gauge, 24-segment dial), boss bar (dark and Treachery versions) | `round2/hud/`, `previews/round2_hud_mock.png` |
+| Skies per core, and floor sigils (ring + poison animal) per hell core | `round2/sky/`, `round2/decals/` |
+| 8 more `.anim` clips (tumbling projectiles, flash pops, Dark One drift) | `round2/animations/` |
+| `VirgilFlipbook.cs` (plays a sprite sheet on a quad) and `VirgilBillboard.cs` | `scripts/` |
+
+Regenerate with:
+```
+PYTHONPATH=<numpy+PIL dir> python3 AssetSuggestions/tools/gen_textures.py
+PYTHONPATH=<numpy+PIL dir> python3 AssetSuggestions/tools/gen_scenes.py
+PYTHONPATH=<numpy+PIL dir> python3 AssetSuggestions/tools/gen_round2.py models hands vfx hud sky decals anims
+```
+
+Notes
+- The preview renderer now samples textures, so the scene mocks show real palettes. Its near plane was also fixed,
+  which slightly changes some round 1 preview images.
+- The cage hand uses thin two-sided hoops; a sliver at their rims shows as a back-face in the sheet. Harmless.
+- `dark_one_stage1-3` use a double-walled shell (outer glass, inner mirror) plus a dark core and a light cap.
+- Like round 1, nothing here has been opened in Unity.

@@ -22,7 +22,7 @@ def _lookat(eye, target, up=(0, 1, 0)):
     return r, u, f
 
 
-NEAR = 0.05
+NEAR = 0.002
 
 
 def _clip_near(cam):
@@ -44,8 +44,15 @@ def _clip_near(cam):
     return [np.array([poly[0], poly[k], poly[k + 1]]) for k in range(1, len(poly) - 1)]
 
 
-def render(mesh, materials, eye, target, size=256, fov=38, bg=(44, 44, 54), ssaa=1):
-    """Returns (PIL image, number of back-facing pixels drawn)."""
+def render(mesh, materials, eye, target, size=256, fov=38, bg=(44, 44, 54), ssaa=1,
+           textures=None, uv_scale=0.5, sphere_mats=()):
+    """Returns (PIL image, number of back-facing pixels drawn).
+
+    textures: {material: HxWx3 uint8 array} sampled with planar UVs (uv_scale tiles per metre),
+    or lat-long UVs around the mesh centre for materials listed in sphere_mats.
+    """
+    textures = textures or {}
+    centre = np.concatenate(mesh.tris).mean(0) if sphere_mats else None
     W = size * ssaa
     r, u, f = _lookat(eye, target)
     eye = np.asarray(eye, float)
@@ -65,17 +72,37 @@ def render(mesh, materials, eye, target, size=256, fov=38, bg=(44, 44, 54), ssaa
         cam_all = np.stack([rel @ r, rel @ u, rel @ f], axis=1)  # x right, y up, z forward
         facing = np.dot(n, eye - tri.mean(0))
         m = materials[mat]
+        tex = textures.get(mat)
+        shade_f = 1.0
         if facing >= 0:
             if "ke" in m:
                 col = np.array(m["ke"], float)
+                tex = None
             else:
-                lam = max(0.0, float(np.dot(n, LIGHT)))
-                col = np.array(m["kd"], float) * (0.52 + 0.62 * lam)
+                shade_f = 0.52 + 0.62 * max(0.0, float(np.dot(n, LIGHT)))
+                col = np.array(m["kd"], float) * shade_f
             is_back = False
         else:
             col = np.array([255, 0, 255], float)
+            tex = None
             is_back = True
+        sphere = tex is not None and mat in sphere_mats
+        if tex is not None and not sphere:
+            ax = int(np.argmax(np.abs(n)))
+            cols = {0: (2, 1), 1: (0, 2), 2: (0, 1)}[ax]
+        if sphere:
+            uvs0 = []
+            for v in tri:
+                d = v - centre
+                d = d / np.linalg.norm(d)
+                uvs0.append((0.5 + math.atan2(d[2], d[0]) / (2 * math.pi),
+                             0.5 + math.asin(max(-1, min(1, d[1]))) / math.pi))
+            if max(p[0] for p in uvs0) - min(p[0] for p in uvs0) > 0.5:
+                uvs0 = [(p[0] + 1 if p[0] < 0.5 else p[0], p[1]) for p in uvs0]
+            uvs0 = np.array(uvs0)
         for cam in _clip_near(cam_all):
+            if sphere and not np.allclose(cam, cam_all):
+                continue
             sx = W / 2 + focal * cam[:, 0] / cam[:, 2]
             sy = W / 2 - focal * cam[:, 1] / cam[:, 2]
             x0, x1 = int(max(0, math.floor(sx.min()))), int(min(W - 1, math.ceil(sx.max())))
@@ -96,7 +123,29 @@ def render(mesh, materials, eye, target, size=256, fov=38, bg=(44, 44, 54), ssaa
             sub = zbuf[y0:y1 + 1, x0:x1 + 1]
             win = inside & (z > sub)
             sub[win] = z[win]
-            img[y0:y1 + 1, x0:x1 + 1][win] = np.clip(col, 0, 255)
+            if tex is not None:
+                if sphere:
+                    uv = uvs0
+                else:
+                    wp = eye + cam[:, 0:1] * r + cam[:, 1:2] * u + cam[:, 2:3] * f   # clipped verts -> world
+                    rect = m.get("uvrect")
+                    if rect is not None and ax == 2:
+                        uv = np.stack([(wp[:, 0] - rect[0]) / (rect[1] - rect[0]),
+                                       (wp[:, 1] - rect[2]) / (rect[3] - rect[2])], axis=1)
+                    else:
+                        uv = np.stack([wp[:, cols[0]], wp[:, cols[1]]], axis=1) * uv_scale
+                iw = np.stack([w0 / cam[0, 2], w1 / cam[1, 2], w2 / cam[2, 2]], axis=-1)
+                iw = iw / np.maximum(iw.sum(-1, keepdims=True), 1e-12)
+                pu = iw @ uv[:, 0]
+                pv = iw @ uv[:, 1]
+                th, tw = tex.shape[:2]
+                ix = np.floor(pu * tw).astype(int) % tw
+                iy = np.floor((1 - pv) * th).astype(int) % th
+                px = np.clip(tex[iy, ix].astype(float) * shade_f, 0, 255)
+                region = img[y0:y1 + 1, x0:x1 + 1]
+                region[win] = px[win]
+            else:
+                img[y0:y1 + 1, x0:x1 + 1][win] = np.clip(col, 0, 255)
             back_mask[y0:y1 + 1, x0:x1 + 1][win] = is_back
     out = Image.fromarray(img.astype(np.uint8), "RGB")
     if ssaa > 1:

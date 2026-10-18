@@ -54,4 +54,17 @@ CORES = [
           ["#3d6a8c", "#5d8fb2", "#85b5d1", "#add2e6", "#d4eaf5", "#f2fbff"],
           "#00cfff", "#e8fbff", None,
           "Saturated cyan ice. Most colourful, least 'inverted ash'."),
+    # ---- round 2 additions (appended so earlier cores keep their seeds) ------
+    _core("bone_rust", "hell",
+          ["#0b0907", "#1c1713", "#33291f", "#554533", "#85704f", "#b7a073"],
+          "#b5441b", "#ff7a2e", "#c8671f",
+          "Catacomb bone and rusted iron. Lighter and chalkier than the others."),
+    _core("violet_dusk", "hell",
+          ["#07050b", "#120c1c", "#201631", "#33224c", "#4d3472", "#75529e"],
+          "#d03fb0", "#ff6adf", "#c0562a",
+          "Occult violet with magenta cracks. Pumpkins stay orange so they still pop."),
+    _core("sunlit_snow", "frost",
+          ["#a69a92", "#bfb4ac", "#d6ccc4", "#e8dfd8", "#f6f0eb", "#fffaf5"],
+          "#ffd9a0", "#fffaf0", None,
+          "Warm-tinted snow, the one frost core with a hint of the autumn palette."),
 ]

@@ -1,0 +1,26 @@
+newmtl glow
+Ka 0 0 0
+Kd 1.0000 0.5412 0.1647
+Ks 0 0 0
+Ke 1.0000 0.5412 0.1647
+
+newmtl ice
+Ka 0 0 0
+Kd 0.7843 0.8824 0.9412
+Ks 0 0 0
+
+newmtl ice_dark
+Ka 0 0 0
+Kd 0.4706 0.6275 0.7451
+Ks 0 0 0
+
+newmtl stone
+Ka 0 0 0
+Kd 0.4314 0.3765 0.3294
+Ks 0 0 0
+map_Kd ../../textures/ash_dusk/platform_ring.png
+
+newmtl trim
+Ka 0 0 0
+Kd 0.2745 0.2196 0.1882
+Ks 0 0 0

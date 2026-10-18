@@ -1,0 +1,31 @@
+newmtl chitin
+Ka 0 0 0
+Kd 0.1176 0.0902 0.1098
+Ks 0 0 0
+
+newmtl eye
+Ka 0 0 0
+Kd 1.0000 0.2353 0.1569
+Ks 0 0 0
+Ke 1.0000 0.2353 0.1569
+
+newmtl glow
+Ka 0 0 0
+Kd 1.0000 0.5490 0.1961
+Ks 0 0 0
+Ke 1.0000 0.5490 0.1961
+
+newmtl joint
+Ka 0 0 0
+Kd 0.3608 0.2039 0.1882
+Ks 0 0 0
+
+newmtl plate
+Ka 0 0 0
+Kd 0.2039 0.1333 0.1569
+Ks 0 0 0
+
+newmtl spine
+Ka 0 0 0
+Kd 0.7451 0.6902 0.5882
+Ks 0 0 0
