@@ -1,0 +1,28 @@
+{
+  // Unity writes DeFurnius.sln when it regenerates project files (Preferences > External Tools).
+  "dotnet.defaultSolution": "DeFurnius.sln",
+
+  // Keep Unity's generated and cache folders out of search and file watching.
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/*.meta": true
+  },
+  "search.exclude": {
+    "**/Library": true,
+    "**/Temp": true,
+    "**/Logs": true,
+    "**/obj": true,
+    "**/UserSettings": true
+  },
+  "files.watcherExclude": {
+    "**/Library/**": true,
+    "**/Temp/**": true,
+    "**/Logs/**": true,
+    "**/obj/**": true
+  },
+  "files.associations": {
+    "*.shader": "hlsl",
+    "*.cginc": "hlsl",
+    "*.compute": "hlsl"
+  }
+}
