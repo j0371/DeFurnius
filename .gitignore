@@ -1,0 +1,12 @@
+# Credentials / agent auth: never commit (gh and claude logins live in the virgil-home Docker volume, not here)
+.env
+.env.*
+hosts.yml
+.credentials.json
+.claude.json
+.config/gh/
+*.pem
+*.key
+*.pfx
+id_rsa*
+id_ed25519*
