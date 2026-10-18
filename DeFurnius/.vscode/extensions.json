@@ -1,0 +1,8 @@
+{
+  // VS Code only offers these; nothing is installed without a click.
+  "recommendations": [
+    "visualstudiotoolsforunity.vstuc",
+    "ms-dotnettools.csdevkit",
+    "ms-dotnettools.csharp"
+  ]
+}

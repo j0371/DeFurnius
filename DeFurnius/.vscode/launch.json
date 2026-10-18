@@ -1,0 +1,12 @@
+{
+  // Attach VS Code to a running Unity Editor (or a Development player).
+  // Needs the "Unity" extension (visualstudiotoolsforunity.vstuc). See Documentation/Debugging-Unity-in-VSCode.md.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Attach to Unity",
+      "type": "vstuc",
+      "request": "attach"
+    }
+  ]
+}
