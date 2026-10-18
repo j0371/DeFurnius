@@ -1,0 +1,20 @@
+newmtl glow
+Ka 0 0 0
+Kd 1.0000 0.2745 0.1569
+Ks 0 0 0
+Ke 1.0000 0.2745 0.1569
+
+newmtl metal
+Ka 0 0 0
+Kd 0.0941 0.0941 0.1137
+Ks 0 0 0
+
+newmtl spike
+Ka 0 0 0
+Kd 0.2902 0.2902 0.3216
+Ks 0 0 0
+
+newmtl trim
+Ka 0 0 0
+Kd 0.4314 0.0941 0.0941
+Ks 0 0 0

@@ -1,0 +1,15 @@
+newmtl bone
+Ka 0 0 0
+Kd 0.8314 0.7922 0.6745
+Ks 0 0 0
+
+newmtl bone_dark
+Ka 0 0 0
+Kd 0.5882 0.5333 0.4235
+Ks 0 0 0
+
+newmtl glow
+Ka 0 0 0
+Kd 1.0000 0.5882 0.2353
+Ks 0 0 0
+Ke 1.0000 0.5882 0.2353

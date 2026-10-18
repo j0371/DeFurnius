@@ -1,0 +1,20 @@
+newmtl glow
+Ka 0 0 0
+Kd 1.0000 0.8235 0.4706
+Ks 0 0 0
+Ke 1.0000 0.8235 0.4706
+
+newmtl gold
+Ka 0 0 0
+Kd 0.7294 0.5725 0.2039
+Ks 0 0 0
+
+newmtl leather
+Ka 0 0 0
+Kd 0.2039 0.1412 0.1176
+Ks 0 0 0
+
+newmtl steel
+Ka 0 0 0
+Kd 0.5882 0.6118 0.6588
+Ks 0 0 0

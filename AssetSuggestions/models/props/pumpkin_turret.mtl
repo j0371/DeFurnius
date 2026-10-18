@@ -1,0 +1,16 @@
+newmtl pumpkin
+Ka 0 0 0
+Kd 0.7216 0.3137 0.1176
+Ks 0 0 0
+map_Kd ../../textures/ash_dusk/pumpkin_face.png
+
+newmtl stem
+Ka 0 0 0
+Kd 0.2745 0.3216 0.1569
+Ks 0 0 0
+
+newmtl stone
+Ka 0 0 0
+Kd 0.4314 0.3765 0.3294
+Ks 0 0 0
+map_Kd ../../textures/ash_dusk/platform_ring.png
