@@ -1,0 +1,15 @@
+newmtl pumpkin
+Ka 0 0 0
+Kd 0.7216 0.3137 0.1176
+Ks 0 0 0
+map_Kd ../../textures/ash_dusk/pumpkin_face.png
+
+newmtl stem
+Ka 0 0 0
+Kd 0.2745 0.3216 0.1569
+Ks 0 0 0
+
+newmtl trim
+Ka 0 0 0
+Kd 0.2745 0.2196 0.1882
+Ks 0 0 0
